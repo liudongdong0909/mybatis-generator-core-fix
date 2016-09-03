@@ -15,12 +15,12 @@
  */
 package org.mybatis.generator.api;
 
-import java.sql.Types;
-import java.util.Properties;
-
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.util.StringUtility;
+
+import java.sql.Types;
+import java.util.Properties;
 
 /**
  * This class holds information about an introspected column. The class has
@@ -61,7 +61,7 @@ public class IntrospectedColumn {
 
     protected Properties properties;
 
-    // any database comment associated with this column. May be null
+    // 数据库表中对应字段的备注信息
     protected String remarks;
 
     protected String defaultValue;

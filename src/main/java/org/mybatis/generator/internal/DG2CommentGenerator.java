@@ -21,33 +21,6 @@ import java.util.List;
         */
 public class DG2CommentGenerator extends  DefaultCommentGenerator{
 
-    /*@Override
-    public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
-        // 生成方法注释
-        method.addJavaDocLine("*//**");
-        String method_name = method.getName();
-
-        if ("deleteByPrimaryKey".equals(method_name)) {
-            method.addJavaDocLine(" * 根据主键删除数据库的记录");
-        } else if ("insert".equals(method_name)) {
-            method.addJavaDocLine(" * 插入数据库记录");
-        } else if ("selectByPrimaryKey".equals(method_name)) {
-            method.addJavaDocLine(" * 根据主键获取一条数据库记录");
-        } else if ("updateByPrimaryKey".equals(method_name)) {
-            method.addJavaDocLine(" * 根据主键来更新数据库记录");
-        } else if ("selectAll".equals(method_name)) {
-            method.addJavaDocLine(" * 获取全部数据库记录");
-        }
-        method.addJavaDocLine(" *");
-        List<Parameter> parameterList = method.getParameters();
-        String paramterName;
-        for (Parameter parameter : parameterList) {
-            paramterName = parameter.getName();
-            method.addJavaDocLine(" * @param " + paramterName);
-        }
-        // addJavadocTag(method, false);
-        method.addJavaDocLine(" *//*");
-    }*/
     public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
         method.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -135,14 +108,18 @@ public class DG2CommentGenerator extends  DefaultCommentGenerator{
         method.addJavaDocLine(" */"); //$NON-NLS-1$
     }
 
+    //生成model对象的注释信息
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
         // 类注释，不管用
         String shortName = innerClass.getType().getShortName();
         innerClass.addJavaDocLine("/**");
         //innerClass.addJavaDocLine(" * 类注释");
+        //获取数据库表的备注信息
         innerClass.addJavaDocLine(" * " + introspectedTable.getFullyQualifiedTable().getRemark());
+        //model对象的名称
         innerClass.addJavaDocLine(" * " + shortName);
+        //获取数据库表
         innerClass.addJavaDocLine(" * 数据库表：" + introspectedTable.getFullyQualifiedTable());
         // addJavadocTag(innerClass, false);
         innerClass.addJavaDocLine(" */");
@@ -160,16 +137,20 @@ public class DG2CommentGenerator extends  DefaultCommentGenerator{
         innerClass.addJavaDocLine(" */");
     }
 
+    //model对象中字段的注释
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
         // 添加字段注释
         StringBuffer sb = new StringBuffer();
         field.addJavaDocLine("/**");
+        //对应表中字段的备注(数据库中自己写的备注信息)
         if (introspectedColumn.getRemarks() != null)
             field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
         sb.append(" * 表字段 : ");
+        //对应表名称
         sb.append(introspectedTable.getFullyQualifiedTable());
         sb.append('.');
+        //对应表中字段的名称
         sb.append(introspectedColumn.getActualColumnName());
         field.addJavaDocLine(sb.toString());
         // addJavadocTag(field, false);
