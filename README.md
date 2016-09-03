@@ -28,29 +28,7 @@ public class TbSeckill {
      */
     private String name;
 
-    /**
-     * 库存数量
-     * 表字段 : tb_seckill.number
-     */
-    private Integer number;
 
-    /**
-     * 
-     * 表字段 : tb_seckill.create_time
-     */
-    private Date createTime;
-
-    /**
-     * 
-     * 表字段 : tb_seckill.start_time
-     */
-    private Date startTime;
-
-    /**
-     * 
-     * 表字段 : tb_seckill.end_time
-     */
-    private Date endTime;
 
     /**
      * 获取 商品库存id 字段:tb_seckill.id
@@ -88,75 +66,4 @@ public class TbSeckill {
         this.name = name == null ? null : name.trim();
     }
 
-    /**
-     * 获取 库存数量 字段:tb_seckill.number
-     *
-     * @return tb_seckill.number, 库存数量
-     */
-    public Integer getNumber() {
-        return number;
-    }
-
-    /**
-     * 设置 库存数量 字段:tb_seckill.number
-     *
-     * @param number the value for tb_seckill.number, 库存数量
-     */
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    /**
-     * 获取  字段:tb_seckill.create_time
-     *
-     * @return tb_seckill.create_time, 
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 设置  字段:tb_seckill.create_time
-     *
-     * @param createTime the value for tb_seckill.create_time, 
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * 获取  字段:tb_seckill.start_time
-     *
-     * @return tb_seckill.start_time, 
-     */
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    /**
-     * 设置  字段:tb_seckill.start_time
-     *
-     * @param startTime the value for tb_seckill.start_time, 
-     */
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    /**
-     * 获取  字段:tb_seckill.end_time
-     *
-     * @return tb_seckill.end_time, 
-     */
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    /**
-     * 设置  字段:tb_seckill.end_time
-     *
-     * @param endTime the value for tb_seckill.end_time, 
-     */
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
 }
