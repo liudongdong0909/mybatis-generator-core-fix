@@ -8,6 +8,7 @@ mybatis generator 生成数据库备注为注释 修整部分代码的样式
 2. brancest-swagger 主要是整合了 swagger来生成带有swagger 注释的model， 用于在线文档。
 
 生成后的样式：
+```
 
 package com.imooc.seckill.model;
 
@@ -71,3 +72,4 @@ public class TbSeckill {
     }
 
 }
+```
