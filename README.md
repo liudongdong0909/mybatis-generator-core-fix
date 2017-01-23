@@ -77,6 +77,8 @@ public class TbSeckill {
 # mybatis-generator的使用
 参照：
 Intellij IDEA 2016学习系列之（二）mybatis-generator自动生成:http://blog.csdn.net/liudongdong0909/article/details/51534735
+
+
 Intellij IDEA 2016学习系列之（三）修改mybatis-generator源码生成中文:http://blog.csdn.net/liudongdong0909/article/details/52427967
 
 ## 在自己工程中的resources 文件下新建一个：generatorConfig.xml
