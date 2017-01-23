@@ -8,7 +8,6 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.config.MergeConstants;
 
 import java.util.List;
 
@@ -111,9 +110,17 @@ public class DG2CommentGenerator extends  DefaultCommentGenerator{
     //生成model对象的注释信息
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
-        // 类注释，不管用
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("@ApiModel(value=\"").append(introspectedTable.getFullyQualifiedTable().getRemark()).append
+                ("\",description=\"数据库表：").append
+                (introspectedTable.getFullyQualifiedTable()).append
+                ("\")");
+        innerClass.addJavaDocLine(sb.toString());
+
+       /* // 类注释，不管用
         String shortName = innerClass.getType().getShortName();
-        innerClass.addJavaDocLine("/**");
+        innerClass.addJavaDocLine("*//**");
         //innerClass.addJavaDocLine(" * 类注释");
         //获取数据库表的备注信息
         innerClass.addJavaDocLine(" * " + introspectedTable.getFullyQualifiedTable().getRemark());
@@ -122,7 +129,7 @@ public class DG2CommentGenerator extends  DefaultCommentGenerator{
         //获取数据库表
         innerClass.addJavaDocLine(" * 数据库表：" + introspectedTable.getFullyQualifiedTable());
         // addJavadocTag(innerClass, false);
-        innerClass.addJavaDocLine(" */");
+        innerClass.addJavaDocLine(" *//*");*/
     }
 
     @Override
@@ -140,9 +147,27 @@ public class DG2CommentGenerator extends  DefaultCommentGenerator{
     //model对象中字段的注释
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-        // 添加字段注释
         StringBuffer sb = new StringBuffer();
-        field.addJavaDocLine("/**");
+
+        if (introspectedColumn.getRemarks() != null) {
+            sb.append("@ApiModelProperty(value=\"").append(introspectedColumn.getRemarks()).append("\",name=\"").append(introspectedColumn.getJavaProperty());
+        }
+
+        if (!(introspectedColumn.isNullable())) {
+            sb.append("\", required=true)");
+            field.addJavaDocLine(sb.toString());
+        } else {
+            sb.append("\")");
+            field.addJavaDocLine(sb.toString());
+        }
+
+        if (!(introspectedColumn.isNullable()))
+        {
+            field.addJavaDocLine("@NotEmpty");
+        }
+       /* // 添加字段注释
+        StringBuffer sb = new StringBuffer();
+        field.addJavaDocLine("*//**");
         //对应表中字段的备注(数据库中自己写的备注信息)
         if (introspectedColumn.getRemarks() != null)
             field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
@@ -154,7 +179,7 @@ public class DG2CommentGenerator extends  DefaultCommentGenerator{
         sb.append(introspectedColumn.getActualColumnName());
         field.addJavaDocLine(sb.toString());
         // addJavadocTag(field, false);
-        field.addJavaDocLine(" */");
+        field.addJavaDocLine(" *//*");*/
     }
 
     @Override
@@ -227,7 +252,11 @@ public class DG2CommentGenerator extends  DefaultCommentGenerator{
 
     @Override
     public void addComment(XmlElement xmlElement) {
-        xmlElement.addElement(new TextElement("<!--")); //$NON-NLS-1$
+
+        StringBuilder sb = new StringBuilder();
+
+        xmlElement.addElement(new TextElement("<!--" + "@mbggenerated" + "-->"));
+     /*   xmlElement.addElement(new TextElement("<!--")); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
         sb.append(MergeConstants.NEW_ELEMENT_TAG);
@@ -245,6 +274,6 @@ public class DG2CommentGenerator extends  DefaultCommentGenerator{
 //            xmlElement.addElement(new TextElement(sb.toString()));
 //        }
 
-        xmlElement.addElement(new TextElement("-->")); //$NON-NLS-1$
+        xmlElement.addElement(new TextElement("-->")); //$NON-NLS-1$*/
     }
 }
