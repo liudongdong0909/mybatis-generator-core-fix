@@ -15,34 +15,15 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.XmlConstants;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BaseColumnListElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BlobColumnListElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.CountByExampleElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByExampleElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ExampleWhereClauseElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertSelectiveElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByExampleWithBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByExampleWithoutBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByPrimaryKeyElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByExampleSelectiveElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByExampleWithBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByExampleWithoutBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeySelectiveElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.*;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * 
@@ -72,20 +53,21 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addMyBatis3UpdateByExampleWhereClauseElement(answer);
         addBaseColumnListElement(answer);
         addBlobColumnListElement(answer);
-        addSelectByExampleWithBLOBsElement(answer);
-        addSelectByExampleWithoutBLOBsElement(answer);
-        addSelectByPrimaryKeyElement(answer);
-        addDeleteByPrimaryKeyElement(answer);
-        addDeleteByExampleElement(answer);
-        addInsertElement(answer);
-        addInsertSelectiveElement(answer);
-        addCountByExampleElement(answer);
-        addUpdateByExampleSelectiveElement(answer);
-        addUpdateByExampleWithBLOBsElement(answer);
-        addUpdateByExampleWithoutBLOBsElement(answer);
-        addUpdateByPrimaryKeySelectiveElement(answer);
-        addUpdateByPrimaryKeyWithBLOBsElement(answer);
-        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
+        //注销mapper.xml中默认方法的生成，只保留 resultMap 和 listColumn,默认方法使用通用mapper代替
+        // addSelectByExampleWithBLOBsElement(answer);
+        // addSelectByExampleWithoutBLOBsElement(answer);
+        // addSelectByPrimaryKeyElement(answer);
+        // addDeleteByPrimaryKeyElement(answer);
+        //  addDeleteByExampleElement(answer);
+//        addInsertElement(answer);
+//        addInsertSelectiveElement(answer);
+//        addCountByExampleElement(answer);
+//        addUpdateByExampleSelectiveElement(answer);
+//        addUpdateByExampleWithBLOBsElement(answer);
+//        addUpdateByExampleWithoutBLOBsElement(answer);
+//        addUpdateByPrimaryKeySelectiveElement(answer);
+//        addUpdateByPrimaryKeyWithBLOBsElement(answer);
+//        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
 
         return answer;
     }

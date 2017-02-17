@@ -51,44 +51,50 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     
     @Override
     public List<CompilationUnit> getCompilationUnits() {
-        progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
-                introspectedTable.getFullyQualifiedTable().toString()));
+        progressCallback.startTask(getString("Progress.17", introspectedTable.getFullyQualifiedTable().toString()));
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getMyBatis3JavaMapperType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
+
+        //获取生成model的全路径
+        FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+        //继承Mpper<T>
+        interfaze.addSuperInterface(new FullyQualifiedJavaType("Mapper" + "<" + entityType.getShortName() + ">"));
+        //导入通用mapper的jar包
+        interfaze.addImportedType(new FullyQualifiedJavaType("tk.mybatis.mapper.common.Mapper"));
+        //导入生成model
+        interfaze.addImportedType(entityType);
+
         commentGenerator.addJavaFileComment(interfaze);
 
-        String rootInterface = introspectedTable
-            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+        String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
-            rootInterface = context.getJavaClientGeneratorConfiguration()
-                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+            rootInterface = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
         if (stringHasValue(rootInterface)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
-                    rootInterface);
+            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(rootInterface);
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
         }
+        //注释默认生成的mapper接口中的方法，使用通用mapper代替
         
-        addCountByExampleMethod(interfaze);
-        addDeleteByExampleMethod(interfaze);
-        addDeleteByPrimaryKeyMethod(interfaze);
-        addInsertMethod(interfaze);
-        addInsertSelectiveMethod(interfaze);
-        addSelectByExampleWithBLOBsMethod(interfaze);
-        addSelectByExampleWithoutBLOBsMethod(interfaze);
-        addSelectByPrimaryKeyMethod(interfaze);
-        addUpdateByExampleSelectiveMethod(interfaze);
-        addUpdateByExampleWithBLOBsMethod(interfaze);
-        addUpdateByExampleWithoutBLOBsMethod(interfaze);
-        addUpdateByPrimaryKeySelectiveMethod(interfaze);
-        addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
-        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
+//        addCountByExampleMethod(interfaze);
+//        addDeleteByExampleMethod(interfaze);
+//        addDeleteByPrimaryKeyMethod(interfaze);
+//        addInsertMethod(interfaze);
+//        addInsertSelectiveMethod(interfaze);
+//        addSelectByExampleWithBLOBsMethod(interfaze);
+//        addSelectByExampleWithoutBLOBsMethod(interfaze);
+//        addSelectByPrimaryKeyMethod(interfaze);
+//        addUpdateByExampleSelectiveMethod(interfaze);
+//        addUpdateByExampleWithBLOBsMethod(interfaze);
+//        addUpdateByExampleWithoutBLOBsMethod(interfaze);
+//        addUpdateByPrimaryKeySelectiveMethod(interfaze);
+//        addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
+//        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().clientGenerated(interfaze, null,
