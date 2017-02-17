@@ -3,7 +3,7 @@
 本工程为maven项目，可以直接打包使用
 此分支整合了swagger 和 通用mapper 以及hibernate validators 的校验
 最终的代码样式：
-### mapper接口样式：
+### mapper接口样式：因为整合了通用mapper，故只需继承Mapper,基本的单表操作完全有通用mapper完成，负责的操作还是需要使用自定义mapper接口，完全是没有影响的
 ```
 package com.ecps.ssm.mapper;
 
@@ -13,7 +13,7 @@ import tk.mybatis.mapper.common.Mapper;
 public interface TbOrderMapper extends Mapper<TbOrder> {
 }
 ```
-### mapper.xml样式：
+### mapper.xml样式：因为整合了通用mapper，故只生产基本的resultMap和sqlColumn
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -23,26 +23,11 @@ public interface TbOrderMapper extends Mapper<TbOrder> {
         <id column="order_id" jdbcType="VARCHAR" property="orderId" />
         <result column="payment" jdbcType="VARCHAR" property="payment" />
         <result column="payment_type" jdbcType="INTEGER" property="paymentType" />
-        <result column="post_fee" jdbcType="VARCHAR" property="postFee" />
-        <result column="status" jdbcType="INTEGER" property="status" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-        <result column="payment_time" jdbcType="TIMESTAMP" property="paymentTime" />
-        <result column="consign_time" jdbcType="TIMESTAMP" property="consignTime" />
-        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-        <result column="close_time" jdbcType="TIMESTAMP" property="closeTime" />
-        <result column="shipping_name" jdbcType="VARCHAR" property="shippingName" />
-        <result column="shipping_code" jdbcType="VARCHAR" property="shippingCode" />
-        <result column="user_id" jdbcType="BIGINT" property="userId" />
-        <result column="buyer_message" jdbcType="VARCHAR" property="buyerMessage" />
-        <result column="buyer_nick" jdbcType="VARCHAR" property="buyerNick" />
-        <result column="buyer_rate" jdbcType="INTEGER" property="buyerRate" />
+        
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbggenerated-->
-        order_id, payment, payment_type, post_fee, status, create_time, update_time, payment_time, 
-        consign_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message, 
-        buyer_nick, buyer_rate
+        order_id, payment, payment_type
     </sql>
 </mapper>
 ```
