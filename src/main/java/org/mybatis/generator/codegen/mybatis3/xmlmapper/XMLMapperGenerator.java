@@ -47,12 +47,12 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
         context.getCommentGenerator().addRootComment(answer);
 
-        addResultMapWithoutBLOBsElement(answer);
-        addResultMapWithBLOBsElement(answer);
-        addExampleWhereClauseElement(answer);
-        addMyBatis3UpdateByExampleWhereClauseElement(answer);
-        addBaseColumnListElement(answer);
-        addBlobColumnListElement(answer);
+        // addResultMapWithoutBLOBsElement(answer);
+        // addResultMapWithBLOBsElement(answer);
+        // addExampleWhereClauseElement(answer);
+        // addMyBatis3UpdateByExampleWhereClauseElement(answer);
+        // addBaseColumnListElement(answer);
+        // addBlobColumnListElement(answer);
         //注销mapper.xml中默认方法的生成，只保留 resultMap 和 listColumn,默认方法使用通用mapper代替
         // addSelectByExampleWithBLOBsElement(answer);
         // addSelectByExampleWithoutBLOBsElement(answer);

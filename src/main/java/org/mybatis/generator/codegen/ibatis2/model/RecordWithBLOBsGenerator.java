@@ -81,19 +81,19 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
                 topLevelClass.addImportedType(field.getType());
             }
 
-            Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
-            if (plugins.modelGetterMethodGenerated(method, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
-                topLevelClass.addMethod(method);
-            }
-
-            method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
-            if (plugins.modelSetterMethodGenerated(method, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
-                topLevelClass.addMethod(method);
-            }
+        //     Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
+        //     if (plugins.modelGetterMethodGenerated(method, topLevelClass,
+        //             introspectedColumn, introspectedTable,
+        //             Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+        //         topLevelClass.addMethod(method);
+        //     }
+        //
+        //     method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
+        //     if (plugins.modelSetterMethodGenerated(method, topLevelClass,
+        //             introspectedColumn, introspectedTable,
+        //             Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+        //         topLevelClass.addMethod(method);
+        //     }
         }
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();

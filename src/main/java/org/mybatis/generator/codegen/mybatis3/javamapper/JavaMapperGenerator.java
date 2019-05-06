@@ -60,10 +60,14 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
         //获取生成model的全路径
         FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+        // //继承Mpper<T>
+        // interfaze.addSuperInterface(new FullyQualifiedJavaType("Mapper" + "<" + entityType.getShortName() + ">"));
+        // //导入通用mapper的jar包
+        // interfaze.addImportedType(new FullyQualifiedJavaType("tk.mybatis.mapper.common.Mapper"));
         //继承Mpper<T>
-        interfaze.addSuperInterface(new FullyQualifiedJavaType("Mapper" + "<" + entityType.getShortName() + ">"));
+        interfaze.addSuperInterface(new FullyQualifiedJavaType("CommonMapper" + "<" + entityType.getShortName() + ">"));
         //导入通用mapper的jar包
-        interfaze.addImportedType(new FullyQualifiedJavaType("tk.mybatis.mapper.common.Mapper"));
+        interfaze.addImportedType(new FullyQualifiedJavaType("com.cloud.common.mapper.CommonMapper"));
         //导入生成model
         interfaze.addImportedType(entityType);
 

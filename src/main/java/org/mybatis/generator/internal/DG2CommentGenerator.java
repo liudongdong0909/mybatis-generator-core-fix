@@ -5,7 +5,10 @@ import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.internal.util.StringUtility;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -13,7 +16,6 @@ import java.util.Iterator;
  *
  * @author IT_donggua
  * @version V1.0
- * @create 2016-09-02 下午 06:28
  */
 public class DG2CommentGenerator extends DefaultCommentGenerator {
 
@@ -21,16 +23,50 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
 
-        StringBuffer sb = new StringBuffer();
-        sb.append("@ApiModel(value=\"").append(introspectedTable.getFullyQualifiedTable().getRemark()).append
-                ("\",description=\"数据库表：").append
-                (introspectedTable.getFullyQualifiedTable()).append
-                ("\")");
-        //添加通用mapper注释 @Table(name = "数据库表名")
-        sb.append("@Table(name = \"" + introspectedTable.getFullyQualifiedTable() + "\")");
-        innerClass.addJavaDocLine(sb.toString());
+        // StringBuffer sb = new StringBuffer();
+        // sb.append("@Setter").append("\n");
+        // sb.append("@Getter").append("\n");
+        // sb.append("@NoArgsConstructor").append("\n");
+        // sb.append("@AllArgsConstructor").append("\n");
+        // sb.append("@Builder").append("\n");
+        // // sb.append("@ApiModel(value=\"").append(introspectedTable.getFullyQualifiedTable().getRemark()).append
+        // //         ("\",description=\"数据库表：").append
+        // //         (introspectedTable.getFullyQualifiedTable()).append
+        // //         ("\")");
+        // //添加通用mapper注释 @Table(name = "数据库表名")
+        // sb.append("@Table(name = \"" + introspectedTable.getFullyQualifiedTable() + "\")");
+        // innerClass.addJavaDocLine(sb.toString());
 
+        innerClass.addJavaDocLine("/**"); //$NON-NLS-1$
+        String remarks = introspectedTable.getFullyQualifiedTable().getRemark();
+        if (StringUtility.stringHasValue(remarks)) {
+            innerClass.addJavaDocLine(" * " + remarks);
+        }
+        innerClass.addJavaDocLine(" *"); //$NON-NLS-1$
+        innerClass.addJavaDocLine(" * @author walle"); //$NON-NLS-1$
+        innerClass.addJavaDocLine(" * @date " + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        innerClass.addJavaDocLine(" */"); //$NON-NLS-1$
     }
+
+    //生成model对象的注释信息
+    @Override
+    public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+
+        // StringBuilder sb = new StringBuilder();
+        topLevelClass.setSuperClass(new FullyQualifiedJavaType("RiskBaseModel"));
+
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.*"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("javax.persistence.Table"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("com.cloud.risk.model.RiskBaseModel"));
+
+        topLevelClass.addJavaDocLine("@Setter");
+        topLevelClass.addJavaDocLine("@Getter");
+        topLevelClass.addJavaDocLine("@NoArgsConstructor");
+        topLevelClass.addJavaDocLine("@AllArgsConstructor");
+        topLevelClass.addJavaDocLine("@Builder");
+        topLevelClass.addJavaDocLine("@Table(name = \"" + introspectedTable.getFullyQualifiedTable() +"\")");
+    }
+
 
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
@@ -50,21 +86,28 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
 
         StringBuffer sb = new StringBuffer();
 
-        if (introspectedColumn.getRemarks() != null) {
-            sb.append("@ApiModelProperty(value=\"").append(introspectedColumn.getRemarks()).append("\",name=\"").append(introspectedColumn.getJavaProperty());
-        }
+        // if (introspectedColumn.getRemarks() != null) {
+        //     sb.append("@ApiModelProperty(value=\"").append(introspectedColumn.getRemarks()).append("\",name=\"").append(introspectedColumn.getJavaProperty());
+        // }
+        //
+        // if (!(introspectedColumn.isNullable())) {
+        //     sb.append("\", required=true)");
+        //     field.addJavaDocLine(sb.toString());
+        // } else {
+        //     sb.append("\")");
+        //     field.addJavaDocLine(sb.toString());
+        // }
+        //
+        // if (!(introspectedColumn.isNullable())) {
+        //     field.addAnnotation("@NotEmpty");
+        // }
 
-        if (!(introspectedColumn.isNullable())) {
-            sb.append("\", required=true)");
-            field.addJavaDocLine(sb.toString());
-        } else {
-            sb.append("\")");
-            field.addJavaDocLine(sb.toString());
-        }
+        sb.append("/**").append("\n");
+        sb.append("     * ");
+        sb.append(introspectedColumn.getRemarks()).append("\n");
+        sb.append("     */");
 
-        if (!(introspectedColumn.isNullable())) {
-            field.addAnnotation("@NotEmpty");
-        }
+        field.addJavaDocLine(sb.toString());
 
         //添加通用mapper字段注解  @Column(name = "数据库字段")
         //如果是主键，需要添加@Id
@@ -76,35 +119,36 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
             }
         }
 
-        field.addAnnotation("@Column(name = \"" + introspectedColumn.getActualColumnName() + "\")");
+        // field.addAnnotation("@Column(name = \"" + introspectedColumn.getActualColumnName() + "\")");
 
     }
 
     @Override
     public void addGetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-        StringBuilder sb = new StringBuilder();
-
-        method.addJavaDocLine("/**"); //$NON-NLS-1$
-
-        sb.append(" * 获取 "); //$NON-NLS-1$
-        sb.append(introspectedColumn.getRemarks()).append(" 字段:");
-        sb.append(introspectedTable.getFullyQualifiedTable());
-        sb.append('.');
-        sb.append(introspectedColumn.getActualColumnName());
-        method.addJavaDocLine(sb.toString());
-
-        method.addJavaDocLine(" *"); //$NON-NLS-1$
-
-        sb.setLength(0);
-        sb.append(" * @return "); //$NON-NLS-1$
-        sb.append(introspectedTable.getFullyQualifiedTable());
-        sb.append('.');
-        sb.append(introspectedColumn.getActualColumnName());
-        sb.append(", ");
-        sb.append(introspectedColumn.getRemarks());
-        method.addJavaDocLine(sb.toString());
-
-        method.addJavaDocLine(" */"); //$NON-NLS-1$
+        // StringBuilder sb = new StringBuilder();
+        //
+        // method.addJavaDocLine("/**"); //$NON-NLS-1$
+        //
+        // sb.append(" * 获取 "); //$NON-NLS-1$
+        // sb.append(introspectedColumn.getRemarks());
+        // // sb.append(" 字段:");
+        // // sb.append(introspectedTable.getFullyQualifiedTable());
+        // // sb.append('.');
+        // // sb.append(introspectedColumn.getActualColumnName());
+        // method.addJavaDocLine(sb.toString());
+        //
+        // method.addJavaDocLine(" *"); //$NON-NLS-1$
+        //
+        // sb.setLength(0);
+        // sb.append(" * @return "); //$NON-NLS-1$
+        // // sb.append(introspectedTable.getFullyQualifiedTable());
+        // // sb.append('.');
+        // // sb.append(introspectedColumn.getActualColumnName());
+        // // sb.append(", ");
+        // sb.append(introspectedColumn.getRemarks());
+        // method.addJavaDocLine(sb.toString());
+        //
+        // method.addJavaDocLine(" */"); //$NON-NLS-1$
     }
 
     @Override
@@ -112,32 +156,34 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
                                  IntrospectedTable introspectedTable,
                                  IntrospectedColumn introspectedColumn) {
 
-        StringBuilder sb = new StringBuilder();
-
-        method.addJavaDocLine("/**"); //$NON-NLS-1$
-
-        sb.append(" * 设置 ");  //$NON-NLS-1$
-        sb.append(introspectedColumn.getRemarks()).append(" 字段:");
-        sb.append(introspectedTable.getFullyQualifiedTable());
-        sb.append('.');
-        sb.append(introspectedColumn.getActualColumnName());
-        method.addJavaDocLine(sb.toString());
-
-        method.addJavaDocLine(" *"); //$NON-NLS-1$
-
-        Parameter parm = method.getParameters().get(0);
-        sb.setLength(0);
-        sb.append(" * @param "); //$NON-NLS-1$
-        sb.append(parm.getName());
-        sb.append(" the value for "); //$NON-NLS-1$
-        sb.append(introspectedTable.getFullyQualifiedTable());
-        sb.append('.');
-        sb.append(introspectedColumn.getActualColumnName());
-        sb.append(", ");
-        sb.append(introspectedColumn.getRemarks());
-        method.addJavaDocLine(sb.toString());
-
-        method.addJavaDocLine(" */"); //$NON-NLS-1$
+        // StringBuilder sb = new StringBuilder();
+        //
+        // method.addJavaDocLine("/**"); //$NON-NLS-1$
+        //
+        // sb.append(" * 设置 ");  //$NON-NLS-1$
+        // sb.append(introspectedColumn.getRemarks());
+        // // sb.append(" 字段:");
+        // // sb.append(introspectedTable.getFullyQualifiedTable());
+        // // sb.append('.');
+        // // sb.append(introspectedColumn.getActualColumnName());
+        // method.addJavaDocLine(sb.toString());
+        //
+        // method.addJavaDocLine(" *"); //$NON-NLS-1$
+        //
+        // Parameter parm = method.getParameters().get(0);
+        // sb.setLength(0);
+        // sb.append(" * @param "); //$NON-NLS-1$
+        // sb.append(parm.getName());
+        // // sb.append(" the value for "); //$NON-NLS-1$
+        // // sb.append(introspectedTable.getFullyQualifiedTable());
+        // // sb.append('.');
+        // // sb.append(introspectedColumn.getActualColumnName());
+        // // sb.append(", ");
+        // sb.append(" ");
+        // sb.append(introspectedColumn.getRemarks());
+        // method.addJavaDocLine(sb.toString());
+        //
+        // method.addJavaDocLine(" */"); //$NON-NLS-1$
     }
 
     @Override
