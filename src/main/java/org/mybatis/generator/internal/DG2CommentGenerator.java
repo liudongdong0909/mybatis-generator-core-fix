@@ -55,9 +55,9 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
         // StringBuilder sb = new StringBuilder();
         // topLevelClass.setSuperClass(new FullyQualifiedJavaType("RiskBaseModel"));
 
-        topLevelClass.addImportedType(new FullyQualifiedJavaType("javax.persistence.Table"));
         topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.*"));
-        topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.experimental.SuperBuilder;"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.experimental.SuperBuilder"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("javax.persistence.Table"));
         // topLevelClass.addImportedType(new FullyQualifiedJavaType("com.cloud.risk.model.RiskBaseModel"));
 
         topLevelClass.addJavaDocLine("@Setter");
