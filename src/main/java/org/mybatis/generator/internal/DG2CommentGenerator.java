@@ -62,7 +62,8 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
         topLevelClass.addJavaDocLine("@Setter");
         topLevelClass.addJavaDocLine("@Getter");
         topLevelClass.addJavaDocLine("@NoArgsConstructor");
-        topLevelClass.addJavaDocLine("@AllArgsConstructor");
+        topLevelClass.addJavaDocLine("@SuperBuilder");
+        // topLevelClass.addJavaDocLine("@AllArgsConstructor");
         topLevelClass.addJavaDocLine("@Table(name = \"" + introspectedTable.getFullyQualifiedTable() +"\")");
     }
 
