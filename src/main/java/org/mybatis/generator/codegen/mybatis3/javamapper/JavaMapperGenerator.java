@@ -26,7 +26,9 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.*;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
@@ -66,6 +68,15 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         interfaze.addImportedType(new FullyQualifiedJavaType("tk.mybatis.mapper.common.Mapper"));
         //导入生成model
         interfaze.addImportedType(entityType);
+
+        interfaze.addJavaDocLine("/**");
+        interfaze.addJavaDocLine(" * " + introspectedTable.getFullyQualifiedTable().getRemark());
+        interfaze.addJavaDocLine(" *"); //$NON-NLS-1$
+        interfaze.addJavaDocLine(" * @author walle"); //$NON-NLS-1$
+        interfaze.addJavaDocLine(" * @date " + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        interfaze.addJavaDocLine(" */"); //$NON-NLS-1$
+
+        interfaze.addAnnotation("@org.apache.ibatis.annotations.Mapper");
 
         commentGenerator.addJavaFileComment(interfaze);
 

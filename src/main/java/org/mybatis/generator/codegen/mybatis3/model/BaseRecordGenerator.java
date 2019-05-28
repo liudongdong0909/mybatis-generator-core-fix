@@ -48,10 +48,10 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         Plugin plugins = context.getPlugins();
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getBaseRecordType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType( introspectedTable.getBaseRecordType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
+
         commentGenerator.addJavaFileComment(topLevelClass);
         commentGenerator.addClassComment(topLevelClass, introspectedTable);
 
@@ -60,6 +60,14 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             topLevelClass.setSuperClass(superClass);
             topLevelClass.addImportedType(superClass);
         }
+
+        // topLevelClass.setSuperClass(new FullyQualifiedJavaType("RiskBaseModel"));
+        //
+        // topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.*"));
+        // topLevelClass.addImportedType(new FullyQualifiedJavaType("javax.persistence.Table"));
+        // topLevelClass.addImportedType(new FullyQualifiedJavaType("com.cloud.risk.model.RiskBaseModel"));
+
+
         commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
 
         List<IntrospectedColumn> introspectedColumns = getColumnsInThisClass();
@@ -87,21 +95,21 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 topLevelClass.addImportedType(field.getType());
             }
 
-            Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
-            if (plugins.modelGetterMethodGenerated(method, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.BASE_RECORD)) {
-                topLevelClass.addMethod(method);
-            }
+            // Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
+            // if (plugins.modelGetterMethodGenerated(method, topLevelClass,
+            //         introspectedColumn, introspectedTable,
+            //         Plugin.ModelClassType.BASE_RECORD)) {
+            //     topLevelClass.addMethod(method);
+            // }
 
-            if (!introspectedTable.isImmutable()) {
-                method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
-                if (plugins.modelSetterMethodGenerated(method, topLevelClass,
-                        introspectedColumn, introspectedTable,
-                        Plugin.ModelClassType.BASE_RECORD)) {
-                    topLevelClass.addMethod(method);
-                }
-            }
+            // if (!introspectedTable.isImmutable()) {
+            //     method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
+            //     if (plugins.modelSetterMethodGenerated(method, topLevelClass,
+            //             introspectedColumn, introspectedTable,
+            //             Plugin.ModelClassType.BASE_RECORD)) {
+            //         topLevelClass.addMethod(method);
+            //     }
+            // }
         }
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
@@ -115,8 +123,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
     private FullyQualifiedJavaType getSuperClass() {
         FullyQualifiedJavaType superClass;
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-            superClass = new FullyQualifiedJavaType(introspectedTable
-                    .getPrimaryKeyType());
+            superClass = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
         } else {
             String rootClass = getRootClass();
             if (rootClass != null) {
