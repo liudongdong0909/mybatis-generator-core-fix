@@ -75,8 +75,9 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         interfaze.addJavaDocLine(" * @author walle"); //$NON-NLS-1$
         interfaze.addJavaDocLine(" * @date " + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         interfaze.addJavaDocLine(" */"); //$NON-NLS-1$
-
-        interfaze.addAnnotation("@org.apache.ibatis.annotations.Mapper");
+        // 如果在启动类上已添加注解 @tk.mybatis.spring.annotation.MapperScan(basePackages = {"com.xxx.yyy.zzz.mapper"})
+        // 则就不需要再在每个 mapper接口上添加 mapper注解
+        // interfaze.addAnnotation("@org.apache.ibatis.annotations.Mapper");
 
         commentGenerator.addJavaFileComment(interfaze);
 
