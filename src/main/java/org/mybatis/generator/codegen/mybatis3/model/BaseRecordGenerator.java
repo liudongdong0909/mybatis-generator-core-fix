@@ -95,21 +95,21 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 topLevelClass.addImportedType(field.getType());
             }
 
-            // Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
-            // if (plugins.modelGetterMethodGenerated(method, topLevelClass,
-            //         introspectedColumn, introspectedTable,
-            //         Plugin.ModelClassType.BASE_RECORD)) {
-            //     topLevelClass.addMethod(method);
-            // }
+            Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
+            if (plugins.modelGetterMethodGenerated(method, topLevelClass,
+                    introspectedColumn, introspectedTable,
+                    Plugin.ModelClassType.BASE_RECORD)) {
+                topLevelClass.addMethod(method);
+            }
 
-            // if (!introspectedTable.isImmutable()) {
-            //     method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
-            //     if (plugins.modelSetterMethodGenerated(method, topLevelClass,
-            //             introspectedColumn, introspectedTable,
-            //             Plugin.ModelClassType.BASE_RECORD)) {
-            //         topLevelClass.addMethod(method);
-            //     }
-            // }
+            if (!introspectedTable.isImmutable()) {
+                method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
+                if (plugins.modelSetterMethodGenerated(method, topLevelClass,
+                        introspectedColumn, introspectedTable,
+                        Plugin.ModelClassType.BASE_RECORD)) {
+                    topLevelClass.addMethod(method);
+                }
+            }
         }
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();

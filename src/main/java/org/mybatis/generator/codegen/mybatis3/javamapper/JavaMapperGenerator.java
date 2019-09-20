@@ -66,6 +66,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         interfaze.addSuperInterface(new FullyQualifiedJavaType("Mapper" + "<" + entityType.getShortName() + ">"));
         //导入通用mapper的jar包
         interfaze.addImportedType(new FullyQualifiedJavaType("tk.mybatis.mapper.common.Mapper"));
+        interfaze.addImportedType(new FullyQualifiedJavaType("org.springframework.stereotype.Repository"));
         //导入生成model
         interfaze.addImportedType(entityType);
 
@@ -78,6 +79,8 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         // 如果在启动类上已添加注解 @tk.mybatis.spring.annotation.MapperScan(basePackages = {"com.xxx.yyy.zzz.mapper"})
         // 则就不需要再在每个 mapper接口上添加 mapper注解
         // interfaze.addAnnotation("@org.apache.ibatis.annotations.Mapper");
+        // 解决idea使用@autowrite 时提示未注入问题
+        interfaze.addAnnotation("@Repository");
 
         commentGenerator.addJavaFileComment(interfaze);
 

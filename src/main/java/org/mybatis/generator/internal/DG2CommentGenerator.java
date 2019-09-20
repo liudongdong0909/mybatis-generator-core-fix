@@ -50,15 +50,15 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
         topLevelClass.addImportedType(new FullyQualifiedJavaType("io.swagger.annotations.ApiModel"));
         topLevelClass.addImportedType(new FullyQualifiedJavaType("io.swagger.annotations.ApiModelProperty"));
 
-        topLevelClass.addJavaDocLine("@Data");
-        topLevelClass.addJavaDocLine("@NoArgsConstructor");
+        // topLevelClass.addJavaDocLine("@Data");
+        // topLevelClass.addJavaDocLine("@NoArgsConstructor");
         topLevelClass.addJavaDocLine("@AllArgsConstructor");
         topLevelClass.addJavaDocLine("@Builder");
         // topLevelClass.addJavaDocLine("@SuperBuilder");
         // topLevelClass.addJavaDocLine("@AllArgsConstructor");
         StringBuffer sb = new StringBuffer();
-        sb.append("@ApiModel(value=\"").append(introspectedTable.getFullyQualifiedTable().getRemark()).append
-                ("\",description=\"数据库表：").append
+        sb.append("@ApiModel(value = \"").append(introspectedTable.getFullyQualifiedTable().getRemark()).append
+                ("\", description = \"数据库表：").append
                 (introspectedTable.getFullyQualifiedTable()).append
                 ("\")");
         //添加通用mapper注释 @Table(name = "数据库表名")
@@ -87,7 +87,7 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
         StringBuffer sb = new StringBuffer();
 
         if (introspectedColumn.getRemarks() != null) {
-            sb.append("@ApiModelProperty(value=\"").append(introspectedColumn.getRemarks()).append("\",name=\"").append(introspectedColumn.getJavaProperty());
+            sb.append("@ApiModelProperty(value = \"").append(introspectedColumn.getRemarks()).append("\", name = \"").append(introspectedColumn.getJavaProperty());
         }
 
         // sb.append("/**").append("\n");
@@ -97,7 +97,7 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
 
         // field.addJavaDocLine(sb.toString());
 
-        field.addAnnotation("@ApiModelProperty(value=\"" + introspectedColumn.getRemarks() + "\",name=\"" + introspectedColumn.getJavaProperty() + "\")");
+        field.addAnnotation("@ApiModelProperty(value = \"" + introspectedColumn.getRemarks() + "\", name = \"" + introspectedColumn.getJavaProperty() + "\")");
         //添加通用mapper字段注解  @Column(name = "数据库字段")
         //如果是主键，需要添加@Id
         Iterator<IntrospectedColumn> primaryKeys = introspectedTable.getPrimaryKeyColumns().iterator();
