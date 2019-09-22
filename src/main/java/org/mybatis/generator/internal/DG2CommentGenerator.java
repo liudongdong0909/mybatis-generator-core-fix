@@ -51,7 +51,7 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
         topLevelClass.addImportedType(new FullyQualifiedJavaType("io.swagger.annotations.ApiModelProperty"));
 
         // topLevelClass.addJavaDocLine("@Data");
-        // topLevelClass.addJavaDocLine("@NoArgsConstructor");
+        topLevelClass.addJavaDocLine("@NoArgsConstructor");
         topLevelClass.addJavaDocLine("@AllArgsConstructor");
         topLevelClass.addJavaDocLine("@Builder");
         // topLevelClass.addJavaDocLine("@SuperBuilder");
