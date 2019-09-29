@@ -54,6 +54,7 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
         // topLevelClass.addJavaDocLine("@Data");
         topLevelClass.addJavaDocLine("@NoArgsConstructor");
         topLevelClass.addJavaDocLine("@AllArgsConstructor");
+        topLevelClass.addJavaDocLine("@@Builder");
         topLevelClass.addJavaDocLine("@SuperBuilder");
         // topLevelClass.addJavaDocLine("@SuperBuilder");
         // topLevelClass.addJavaDocLine("@AllArgsConstructor");
