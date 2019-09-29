@@ -42,9 +42,9 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
         // topLevelClass.setSuperClass(new FullyQualifiedJavaType("RiskBaseModel"));
 
         topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.*"));
-        topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.experimental.SuperBuilder"));
         // topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.experimental.SuperBuilder"));
-        // topLevelClass.addImportedType(new FullyQualifiedJavaType("javax.persistence.Id"));
+        // topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.experimental.SuperBuilder"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("javax.persistence.Id"));
         topLevelClass.addImportedType(new FullyQualifiedJavaType("javax.persistence.Table"));
         // topLevelClass.addImportedType(new FullyQualifiedJavaType("com.cloud.risk.model.RiskBaseModel"));
 
@@ -55,7 +55,7 @@ public class DG2CommentGenerator extends DefaultCommentGenerator {
         topLevelClass.addJavaDocLine("@NoArgsConstructor");
         topLevelClass.addJavaDocLine("@AllArgsConstructor");
         topLevelClass.addJavaDocLine("@Builder");
-        topLevelClass.addJavaDocLine("@SuperBuilder");
+        // topLevelClass.addJavaDocLine("@SuperBuilder");
         // topLevelClass.addJavaDocLine("@SuperBuilder");
         // topLevelClass.addJavaDocLine("@AllArgsConstructor");
         StringBuffer sb = new StringBuffer();
